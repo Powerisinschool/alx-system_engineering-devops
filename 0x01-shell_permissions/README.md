@@ -1,0 +1,5 @@
+# Shell permissions
+```
+ $ [command] [--arg]
+```
+
