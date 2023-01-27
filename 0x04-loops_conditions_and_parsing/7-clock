@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script is displaying "Best School" 10 times
+i=0
+while [ $i -le 12 ]
+do
+    echo "Hour: $i"
+    k=0
+    while [ $k -lt 59 ]
+    do
+        ((k+=1))
+        echo $k
+    done
+    ((i+=1))
+done
+
