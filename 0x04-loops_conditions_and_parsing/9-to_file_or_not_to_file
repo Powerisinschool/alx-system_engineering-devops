@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # School file
 FILE=./school
-if [ -d "$FILE" ] || [ -f "$FILE" ]; then
+if [ -e "$FILE" ]; then
   echo "school file exists"
   if [ -s "$FILE" ]; then
     echo "school file is not empty"
