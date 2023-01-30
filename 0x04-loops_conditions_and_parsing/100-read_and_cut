@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script displays the content of the /etc/passwd file in a custom format
+while read -r line; do
+  while IFS=':' read -r -a arr; do
+    echo "${arr[0]}:${arr[2]}:${arr[5]}"
+  done <<< "$line"
+done < /etc/passwd
