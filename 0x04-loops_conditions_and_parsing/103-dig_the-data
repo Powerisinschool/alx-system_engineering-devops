@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# This script displays the content of the /etc/passwd file in a custom format
+awk '{print $1,$9}' ./apache-access.log | sort | uniq -c | sort -r
