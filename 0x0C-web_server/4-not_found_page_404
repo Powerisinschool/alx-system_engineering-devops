@@ -29,7 +29,7 @@ echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
 # Set up a redirect to example.com
 sudo sed -i.tmp '24i\	rewrite ^/redirect_me https://example.com permanent;' /etc/nginx/sites-available/default
 
-sudo printf "<h1 style='color: red'>Ceci n'est pas une page</h1>\n<p>Are you sure you typed in the correct URL?</p>\n" > /usr/share/nginx/html/custom_404.html
+printf "<h1 style='color: red'>Ceci n'est pas une page</h1>\n<p>Are you sure you typed in the correct URL?</p>\n" | sudo tee /usr/share/nginx/html/custom_404.html
 
 sudo sed -i '25i\	error_page 404 /custom_404.html;' /etc/nginx/sites-available/default
 sudo sed -i '26i\	location = /custom_404.html {' /etc/nginx/sites-available/default
