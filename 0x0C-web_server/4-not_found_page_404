@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Configures a new ubuntu machine by installing
+# Nginx where it should be listening on port 80
+# Serve a page that would return a Hello World string
+
+
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+	 sudo apt-get install nginx -y
+
+echo -e "\nSetting up Nginx.\n"
+
+# starting nginx service
+sudo service nginx start
+
+# allowing nginx on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give the user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Creating new index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Set up a redirect to example.com
+sudo sed -i.tmp '24i\	rewrite ^/redirect_me https://example.com permanent;' /etc/nginx/sites-available/default
+
+sudo printf "<h1 style='color: red'>Ceci n'est pas une page</h1>\n<p>Are you sure you typed in the correct URL?</p>\n" > /usr/share/nginx/html/custom_404.html
+
+sudo sed -i '25i\	error_page 404 /custom_404.html;' /etc/nginx/sites-available/default
+sudo sed -i '26i\	location = /custom_404.html {' /etc/nginx/sites-available/default
+sudo sed -i '27i\		root /usr/share/nginx/html;' /etc/nginx/sites-available/default
+sudo sed -i '28i\		internal;' /etc/nginx/sites-available/default
+sudo sed -i '29i\	}' /etc/nginx/sites-available/default
+
+# Restarting nginx
+sudo service nginx restart
+
+echo -e "\nCompleted. ✅\n"
