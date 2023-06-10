@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Script to print infinitely
+
+# Handle SIGTERM
+trap "echo 'I am invincible!!!'" 15
+
+while true;
+do
+	echo "To infinity and beyond"
+	sleep 2
+done
