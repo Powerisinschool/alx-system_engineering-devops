@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Script to print infinitely
+
+echo "$$" > /var/run/myscript.pid
+
+termfunc() {
+	rm /var/run/myscript.pid
+	exit
+}
+
+# Handle SIGINT
+trap "echo 'Y U no love me?!'" SIGINT
+# Handle SIGTERM
+trap 'echo "I hate the kill command" && termfunc' SIGTERM
+# Execute termfunc on SIGTERM / SIGQUIT
+trap 'termfunc' SIGQUIT
+
+while true;
+do
+	echo "To infinity and beyond"
+	sleep 2
+done
